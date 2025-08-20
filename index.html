@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotary e-Pledge for the Planet</title>
+    
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header-bar">
+        <div class="header-logo">
+            <img src="Img/RID3233.png" alt="Rotary D3233 Logo">
+            <span class="header-title">RID 3233</span>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🌿 Rotary e-Pledge for the Planet 🌿</h1>
+            <h2>Rotary International District 3233<br>Together for a Sustainable Tomorrow</h2>
+            <button id="open-pledge-modal" class="cta-btn">📝 Take the e-Pledge Now</button>
+            <button id="open-certificate-modal" class="cta-btn secondary">📜 Get Existing Certificate</button>
+            <div class="analytics-hero-section">
+                <div class="pledge-count-hero" id="pledge-count">12,847</div>
+                <div class="pledge-description-hero">people have taken the pledge so far</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Modal for e-Pledge Form and Certificate Preview -->
+    <div id="pledge-modal" class="modal-bg">
+        <div class="modal-content">
+            <button id="close-pledge-modal" class="close-modal">&times;</button>
+            
+            <!-- Pledge Form -->
+            <form class="pledge-form" id="pledge-form">
+                <div class="form-header">
+                    <h3>🌿 Take the e-Pledge</h3>
+                    <p>Join thousands of others in committing to a sustainable future</p>
+                </div>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input id="name" type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="org">Organization / Institution / Location</label>
+                        <input id="org" type="text" placeholder="Your Organization" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input id="dob" type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Contact Number</label>
+                        <input id="contact" type="text" placeholder="Your Contact Number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Place / City</label>
+                        <input id="city" type="text" placeholder="Your City" required>
+                    </div>
+                </div>
+                
+                <div class="pledge-commitments">
+                    <h4>🌿 My e-Pledge Commitments</h4>
+                    <div class="commitment-list">
+                        <label class="commitment-item">
+                            <input type="checkbox" required>
+                            <span>✅ I say NO to single-use plastics</span>
+                        </label>
+                        <label class="commitment-item">
+                            <input type="checkbox" required>
+                            <span>✅ I choose eco-friendly alternatives</span>
+                        </label>
+                        <label class="commitment-item">
+                            <input type="checkbox" required>
+                            <span>✅ I commit to protecting the environment</span>
+                        </label>
+                        <label class="commitment-item">
+                            <input type="checkbox" required>
+                            <span>✅ I will keep my surroundings clean and green</span>
+                        </label>
+                        <label class="commitment-item">
+                            <input type="checkbox" required>
+                            <span>✅ I promise to be a responsible citizen of Earth</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Take the Pledge Now →</button>
+            </form>
+            
+            <!-- Certificate Preview -->
+            <div id="certificate-preview" class="certificate-preview">
+                <div class="certificate-box" id="certificate-box">
+                    <!-- Certificate Header -->
+                    <div class="cert-header">
+                        <img src="Img/RID3233.png" alt="Rotary District 3233 Logo" class="cert-logo">
+                        <h4 class="cert-title">Environmental Pledge Certificate</h4>
+                        <div class="cert-subtitle">Rotary International District 3233</div>
+                    </div>
+
+                    <!-- Certificate Body -->
+                    <div class="cert-body">
+                        <!-- <div class="cert-decorative-line"></div> -->
+                        
+                        <p class="cert-intro">This is to certify that</p>
+                        
+                        <div class="cert-name-section">
+                            <h2 class="cert-recipient-name" id="cert-name">John Doe</h2>
+                            <div class="cert-name-line"></div>
+                        </div>
+                        
+                        <p class="cert-text">has taken the Environmental Pledge</p>
+                        <p class="cert-text">and committed to sustainable practices</p>
+                        <p class="cert-text">for a better planet</p>
+                        
+                        <!-- <div class="cert-decorative-line"></div> -->
+                    </div>
+
+                    <!-- Certificate Footer -->
+                    <div class="cert-footer">
+                        <div class="cert-date-section">
+                            <span class="cert-date-label">Date:</span>
+                            <span class="cert-date" id="cert-date">January 1, 2024</span>
+                        </div>
+                        <div class="cert-badge">
+                            <!-- <span class="cert-icon">🌍</span> -->
+                            <span class="cert-message">For a Greener Tomorrow</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="download-certificate" class="download-btn">Download Certificate (PDF)</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for Certificate Retrieval -->
+    <div id="certificate-modal" class="modal-bg">
+        <div class="modal-content">
+            <button id="close-certificate-modal" class="close-modal">&times;</button>
+            
+            <!-- Certificate Lookup Form -->
+            <div class="certificate-lookup" id="certificate-lookup">
+                <div class="lookup-header">
+                    <div class="lookup-icon">📜</div>
+                    <h3 class="lookup-title">Retrieve Your Certificate</h3>
+                    <p class="lookup-subtitle">Enter your phone number to download your existing e-Pledge certificate</p>
+                </div>
+                
+                <div class="lookup-form-container">
+                    <form id="certificate-lookup-form" class="lookup-form">
+                        <div class="lookup-input-group">
+                            <label for="lookup-phone" class="lookup-label">📱 Phone Number</label>
+                            <input id="lookup-phone" type="tel" class="lookup-input" placeholder="Enter your registered phone number" required>
+                            <div class="input-underline"></div>
+                        </div>
+                        <button type="submit" class="lookup-submit-btn">
+                            <span class="btn-icon">🔍</span>
+                            <span class="btn-text">Find My Certificate</span>
+                        </button>
+                    </form>
+                    
+                    <div class="lookup-help">
+                        <p>💡 <strong>Tip:</strong> Use the same phone number you provided when taking the pledge</p>
+                    </div>
+                </div>
+                
+                <div id="lookup-result" class="lookup-result" style="display: none;">
+                    <!-- Results will be displayed here -->
+                </div>
+            </div>
+            
+            <!-- Retrieved Certificate Display -->
+            <div class="retrieved-certificate" id="retrieved-certificate">
+                <div class="certificate-box" id="retrieved-certificate-box">
+                    <!-- Certificate Header -->
+                    <div class="cert-header">
+                        <img src="Img/RID3233.png" alt="Rotary District 3233 Logo" class="cert-logo">
+                        <h1 class="cert-title">Environmental Pledge Certificate</h1>
+                        <div class="cert-subtitle">Rotary International District 3233</div>
+                    </div>
+
+                    <!-- Certificate Body -->
+                    <div class="cert-body">
+                        <div class="cert-decorative-line"></div>
+                        
+                        <p class="cert-intro">This is to certify that</p>
+                        
+                        <div class="cert-name-section">
+                            <h2 class="cert-recipient-name" id="retrieved-cert-name">John Doe</h2>
+                            <div class="cert-name-line"></div>
+                        </div>
+                        
+                        <p class="cert-text">has taken the Environmental Pledge</p>
+                        <p class="cert-text">and committed to sustainable practices</p>
+                        <p class="cert-text">for a better planet</p>
+                        
+                        <div class="cert-decorative-line"></div>
+                    </div>
+
+                    <!-- Certificate Footer -->
+                    <div class="cert-footer">
+                        <div class="cert-date-section">
+                            <span class="cert-date-label">Date:</span>
+                            <span class="cert-date" id="retrieved-cert-date">January 1, 2024</span>
+                        </div>
+                        <div class="cert-badge">
+                            <span class="cert-icon">🌍</span>
+                            <span class="cert-message">Together for a Greener Tomorrow</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="download-retrieved-certificate" class="download-btn">Download Certificate (PDF)</button>
+            </div>
+            <button id="back-to-lookup" class="submit-btn secondary">← Back to Search</button>
+        </div>
+    </div>
+    
+    <!-- Copyright Footer -->
+    <div class="copyright-strip">
+        &copy; Rotary International District 3233. All Rights Reserved.
+        © Rotary International District 3233. All Rights Reserved.
+    </div>
+    
+    <!-- External JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
